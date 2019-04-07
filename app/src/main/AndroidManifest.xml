@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.example.foodbasket">
+
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.INTERNET" />
+
+    <application
+        android:allowBackup="true"
+        android:icon="@mipmap/ic_launcher"
+        android:label="@string/app_name"
+        android:roundIcon="@mipmap/ic_launcher_round"
+        android:supportsRtl="true"
+        android:theme="@style/AppTheme">
+
+        <activity
+            android:name=".Main.SplashActivity"
+            android:label="@string/app_name"
+            android:windowSoftInputMode="stateHidden">
+            <intent-filter>
+                <action android:name="android.intent.action.MAIN" />
+
+                <category android:name="android.intent.category.LAUNCHER" />
+            </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".Main.MainActivity"
+            android:windowSoftInputMode="stateHidden|adjustPan" />
+
+        <activity
+            android:name=".Main.LoginSignupActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".Test"
+            android:theme="@style/AppTheme.NoActionBar"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ForgotPassword.ForgorPassActivity"
+            android:windowSoftInputMode="stateHidden" />
+        <activity
+            android:name=".ForgotPassword.NewPassword"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".SubCategory.SubCategory"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".ProductDetail.Product_Detail_Main"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".Payment"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".Checkout.CheckoutActivity"
+            android:windowSoftInputMode="stateHidden" />
+
+        <activity
+            android:name=".ConfirmOrder.DateTime"
+            android:windowSoftInputMode="stateHidden" />
+
+    </application>
+
+</manifest>
+

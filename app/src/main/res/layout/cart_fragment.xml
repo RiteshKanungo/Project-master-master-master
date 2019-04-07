@@ -1,0 +1,224 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginTop="55sp"
+    android:background="@color/colorWhite"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:gravity="center"
+        android:layout_gravity="center"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_weight="1"
+                android:layout_height="wrap_content">
+
+                <ImageView
+                    android:id="@+id/img_view"
+                    android:layout_width="match_parent"
+                    android:layout_height="120sp"
+                    android:layout_marginLeft="90sp"
+                    android:layout_marginTop="20sp"
+                    android:layout_marginRight="90sp"
+                    android:layout_marginBottom="10sp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/imagetop" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content">
+
+                <android.support.v7.widget.RecyclerView
+                    android:id="@+id/recycle_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/img_view"
+                    android:layout_marginLeft="10sp"
+                    android:layout_marginRight="10sp"
+                    android:listSelector="#0f0"
+                    android:padding="10sp"
+                    android:visibility="gone" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10sp"
+            android:layout_marginTop="30sp"
+            android:layout_marginRight="10sp"
+            android:orientation="vertical"
+            android:text="dsvsvsvvsdvsdv">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:gravity="center">
+
+                <TextView
+                    android:id="@+id/txt_description"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:text="Aashirvaad Shudh Chakki Whole Wheat Aata"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="20sp" />
+
+                <TextView
+                    android:id="@+id/txt_sub_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBaseline="@+id/txt_off"
+                    android:layout_alignBottom="@+id/txt_off"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:text="More by    Aashirwad"
+                    android:textColor="@color/colorCircle"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_off"
+                    android:layout_width="80sp"
+                    android:layout_height="30sp"
+                    android:layout_below="@+id/txt_description"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:background="@drawable/layout_backgroud"
+                    android:backgroundTint="@color/colorbackground"
+                    android:gravity="center"
+                    android:text="10% off"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="14sp" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentTop="true"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:gravity="center_vertical">
+
+                <TextView
+                    android:id="@+id/txt_mrp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="3sp"
+                    android:text="MRP 350"
+                    android:textSize="16sp" />
+
+                <TextView
+                    android:id="@+id/txt_discounted_price"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_mrp"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_marginTop="7sp"
+                    android:text="Discounted price:"
+                    android:textColor="@color/colorBlack"
+                    android:textSize="18sp" />
+
+                <TextView
+                    android:id="@+id/txt_rate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@+id/txt_mrp"
+                    android:layout_marginLeft="3sp"
+                    android:layout_toRightOf="@+id/txt_discounted_price"
+                    android:text="314"
+                    android:textColor="@color/colorgreen"
+                    android:textSize="30sp"
+                    android:textStyle="bold" />
+
+
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+
+                <TextView
+                    android:id="@+id/txt_available"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="5dp"
+                    android:text="Available in:"
+                    android:textColor="@color/colorCircle"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:id="@+id/txt_5kg"
+                    android:layout_width="70sp"
+                    android:layout_height="25sp"
+                    android:layout_below="@+id/txt_available"
+                    android:layout_marginTop="3sp"
+                    android:background="@drawable/layout_quantity"
+                    android:gravity="center"
+                    android:text="5KG"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorCircle"
+                    android:textSize="14sp" />
+
+                <TextView
+                    android:layout_width="70sp"
+                    android:layout_height="25sp"
+                    android:layout_below="@+id/txt_available"
+                    android:layout_marginLeft="5sp"
+                    android:layout_marginTop="3sp"
+                    android:layout_toRightOf="@+id/txt_5kg"
+                    android:background="@drawable/layout_quantity"
+                    android:gravity="center"
+                    android:text="10KG"
+                    android:textAlignment="center"
+                    android:textColor="@color/colorRed"
+                    android:textSize="14sp" />
+
+            </RelativeLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_marginTop="10sp"
+                android:layout_weight="1"
+                android:gravity="center">
+
+                <Button
+                    android:id="@+id/btn_add_cart"
+                    android:layout_width="match_parent"
+                    android:layout_height="45sp"
+                    android:background="@drawable/layout_backgroud"
+                    android:backgroundTint="@color/colorbackground"
+                    android:text="Add To Cart"
+                    android:textAllCaps="false"
+                    android:textColor="@color/colorWhite"
+                    android:textSize="16sp"
+                    android:textStyle="normal" />
+            </LinearLayout>
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

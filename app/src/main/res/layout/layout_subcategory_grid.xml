@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_gravity="center"
+    android:gravity="center"
+    android:layout_height="match_parent"
+    android:layout_margin="20sp"
+    android:background="@drawable/layout_subcategory"
+    android:paddingTop="10sp"
+    android:paddingLeft="10sp"
+    android:paddingRight="10sp"
+    android:paddingBottom="15sp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:orientation="vertical"
+        android:layout_height="220sp"
+        android:layout_weight="1">
+
+        <ImageView
+            android:id="@+id/img_grid"
+            android:layout_width="match_parent"
+            android:layout_height="120sp"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true"
+            android:scaleType="fitXY"
+            android:src="@drawable/imagebottom" />
+
+        <TextView
+            android:id="@+id/txt_cashback"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/img_grid"
+            android:layout_marginTop="5sp"
+            android:background="@color/colorbackground"
+            android:padding="4sp"
+            android:text="Rs 2000 Cashback"
+            android:textColor="@color/colorWhite"
+            android:textSize="12sp" />
+
+        <TextView
+            android:id="@+id/txt_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_cashback"
+            android:layout_marginTop="3sp"
+            android:text="Grocery Staplss"
+            android:textColor="@color/colorBlack"
+            android:textSize="18sp"
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/txt_desc"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_title"
+            android:layout_marginRight="5sp"
+            android:layout_marginTop="3sp"
+            android:text="Atta &amp; Other Flours,Rice &amp; Other Grains,Spices "
+            android:textSize="10sp" />
+    </LinearLayout>
+</RelativeLayout>

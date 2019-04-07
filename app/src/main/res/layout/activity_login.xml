@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:id="@+id/session_fragment"
+        android:layout_width="match_parent"
+        android:background="@color/colorWhite"
+        android:layout_height="70sp"
+        android:gravity="bottom">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:id="@+id/layout"
+            android:layout_gravity="center|center_horizontal"
+            android:background="@drawable/layout_backgroud"
+            android:gravity="center">
+
+            <TextView
+                android:layout_width="120sp"
+                android:id="@+id/txt_login"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:background="@color/colorbackground"
+                android:gravity="center"
+                android:paddingBottom="6sp"
+                android:paddingLeft="20sp"
+                android:paddingRight="20sp"
+                android:paddingTop="6sp"
+                android:text="LOGIN"
+                android:textAlignment="center"
+                android:textColor="@color/colorWhite"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:layout_width="120sp"
+                android:id="@+id/txt_signup"
+                android:layout_height="40sp"
+                android:layout_gravity="center_vertical"
+                android:gravity="center"
+                android:paddingBottom="6sp"
+                android:paddingLeft="10sp"
+                android:paddingRight="10sp"
+                android:paddingTop="6sp"
+                android:text="SIGN UP"
+                android:textAlignment="center"
+                android:textColor="@color/colorbackground"
+                android:textSize="14sp"
+                android:textStyle="bold" />
+
+        </LinearLayout>
+    </RelativeLayout>
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:id="@+id/layout_session"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/session_fragment"></RelativeLayout>
+
+</RelativeLayout>

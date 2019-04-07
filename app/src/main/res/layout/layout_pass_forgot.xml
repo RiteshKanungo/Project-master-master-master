@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/activity_main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:fillViewport="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/txt_email"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="Check Email"
+            android:textAlignment="center"
+            android:textColor="@color/colorBlack"
+            android:textSize="28sp" />
+
+        <TextView
+            android:id="@+id/txt_detail"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/txt_email"
+            android:layout_margin="20sp"
+            android:text="We have sent you an email with a link for reset password"
+            android:textAlignment="center"
+            android:textSize="20sp" />
+
+        <Button
+            android:id="@+id/btn_contiune"
+            android:layout_width="match_parent"
+            android:layout_height="50sp"
+            android:layout_below="@+id/txt_detail"
+            android:layout_centerHorizontal="true"
+            android:layout_margin="30sp"
+            android:background="@drawable/layout_backgroud"
+            android:backgroundTint="@color/colorbackground"
+            android:text="Continue"
+            android:textColor="@color/colorWhite"
+            android:textSize="20dp"
+            android:textStyle="bold" />
+
+    </RelativeLayout>
+</ScrollView>
