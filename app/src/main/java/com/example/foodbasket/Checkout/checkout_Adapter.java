@@ -138,7 +138,6 @@ public class checkout_Adapter extends RecyclerView.Adapter<checkout_Adapter.View
                                 minteger = minteger - 1;
                                 txt_qua.setText(minteger + "");
                             }
-
                         }
                     });
 

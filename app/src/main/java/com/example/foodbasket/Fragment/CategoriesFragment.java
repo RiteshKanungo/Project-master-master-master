@@ -1,5 +1,6 @@
 package com.example.foodbasket.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
@@ -47,6 +48,7 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
     ImageView img_back;
     String id;
     SharedProcessData sharedProcessData;
+    ProgressDialog  progressDialog;
 
     @Nullable
     @Override
@@ -57,6 +59,12 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
     }
 
     private void bindView() {
+
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setIndeterminate(false);
+        progressDialog.setMessage("Please wait..");
+        progressDialog.setCancelable(false);
+
         sharedProcessData = new SharedProcessData(getActivity());
         //      img_back = findViewById(R.id.img_back);
         //      img_back.setOnClickListener(this);
@@ -104,6 +112,8 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+
+                        progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
@@ -121,6 +131,7 @@ public class CategoriesFragment extends Fragment implements View.OnClickListener
             }
         };
         queue.add(postRequest);
+        progressDialog.show();
 
     }
 

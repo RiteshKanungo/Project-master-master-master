@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.net.ConnectivityManager;
-import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
@@ -76,9 +75,10 @@ public class HomeFragment extends Fragment {
         sharedProcessData = new SharedProcessData(getActivity());
 
         progressDialog = new ProgressDialog(getActivity());
-        getGridData gridData = new getGridData();
-        gridData.execute();
-        // getData);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setMessage("Please wait..");
+        progressDialog.setCancelable(false);
+        getData();
         convert();
         return view;
     }
@@ -96,29 +96,6 @@ public class HomeFragment extends Fragment {
         recycle_view.setLayoutManager(mLayoutManager2);
     }
 
-
-    public class getGridData extends AsyncTask<Void, Void, Void> {
-
-
-        @Override
-        protected void onPreExecute() {
-            progressDialog = ProgressDialog.show(getActivity(), "Loading..", "Loading....", true, false);
-        }
-
-        @Override
-        protected void onPostExecute(Void aVoid) {
-            super.onPostExecute(aVoid);
-            progressDialog.dismiss();
-        }
-
-        @Override
-        protected Void doInBackground(Void... voids) {
-            getData();
-            return null;
-
-
-        }
-    }
 
     private void getData() {
         RequestQueue queue = Volley.newRequestQueue(getActivity());
@@ -192,6 +169,7 @@ public class HomeFragment extends Fragment {
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
@@ -209,6 +187,7 @@ public class HomeFragment extends Fragment {
             }
         };
         queue.add(postRequest);
+        progressDialog.show();
     }
 
     public void getRecycleListner() {

@@ -1,5 +1,6 @@
 package com.example.foodbasket.Main;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -29,9 +30,10 @@ import com.example.foodbasket.Checkout.CheckoutActivity;
 import com.example.foodbasket.Fragment.CategoriesFragment;
 import com.example.foodbasket.Fragment.HomeFragment;
 import com.example.foodbasket.R;
-import com.example.foodbasket.Test;
 import com.example.foodbasket.Utils.SharedProcessData;
+import com.example.foodbasket.WebViewFragment;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import java.util.HashMap;
@@ -48,15 +50,21 @@ public class MainActivity extends AppCompatActivity
     ImageView img;
 
     int k = 0;
-    String name, user_email;
+    String name, user_email, address;
     TextView txt_name, txt_email, txt_address;
     ImageView img_edit;
     RelativeLayout layout1, layout2, layout3, layout4, layout5;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         sharedProcessData = new SharedProcessData(this);
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setMessage("Please wait..");
+        progressDialog.setCancelable(false);
+
         try {
             email = sharedProcessData.getString("email");
             token = sharedProcessData.getString("Token");
@@ -97,22 +105,30 @@ public class MainActivity extends AppCompatActivity
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("ProfileData",response);
+                        Log.e("ProfileData", response);
                         try {
                             Log.e("Response", response + "");
                             JSONObject jsonObject = new JSONObject(response);
-                            JSONObject data =jsonObject.getJSONObject("data");
-                            JSONObject user=data.getJSONObject("user");
+                            JSONObject data = jsonObject.getJSONObject("data");
+                            JSONObject user = data.getJSONObject("user");
                             name = user.getString("name");
                             user_email = user.getString("email");
+                            JSONArray jsonArray = user.getJSONArray("address");
+                            JSONObject address = jsonArray.getJSONObject(0);
+                            String flat = address.getString("address");
+                            String building = address.getString("building_apartment");
                             txt_email.setText(email);
                             txt_name.setText(name);
+                            txt_address.setText(flat + "," + building);
+
                             sharedProcessData.setString("name", name);
                             sharedProcessData.setString("email", email);
-                            txt_address.setText("Address");
+                            sharedProcessData.setString("address", flat + "," + building);
+
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
@@ -131,6 +147,7 @@ public class MainActivity extends AppCompatActivity
             }
         };
         queue.add(postRequest);
+        progressDialog.show();
     }
 
     @Override
@@ -216,7 +233,7 @@ public class MainActivity extends AppCompatActivity
                         super.onBackPressed();
                     }
                 }
-            }else {
+            } else {
                 finish();
             }
         } catch (Exception e) {
@@ -229,19 +246,52 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
-        if (id == R.id.nav_camera) {
+        if (id == R.id.cart) {
+            startActivity(new Intent(this, CheckoutActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
 
-        } else if (id == R.id.nav_gallery) {
-            startActivity(new Intent(this, Test.class));
+        } else if (id == R.id.my_orders) {
 
-        } else if (id == R.id.nav_slideshow) {
+        } else if (id == R.id.offers) {
+            Intent intent = new Intent(this, WebViewFragment.class);
+            intent.putExtra("url", "http://ec2-18-217-123-54.us-east-2.compute.amazonaws.com/offers");
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+            finish();
 
-        } else if (id == R.id.nav_manage) {
+        } else if (id == R.id.about_us) {
+            Intent intent = new Intent(this, WebViewFragment.class);
+            intent.putExtra("url", "http://ec2-18-217-123-54.us-east-2.compute.amazonaws.com/aboutUs");
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+            finish();
+
+        } else if (id == R.id.customer_support) {
+            Intent intent = new Intent(this, WebViewFragment.class);
+            intent.putExtra("url", "http://ec2-18-217-123-54.us-east-2.compute.amazonaws.com/custmerSupport");
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+            finish();
+
+        } else if (id == R.id.faq) {
+            Intent intent = new Intent(this, WebViewFragment.class);
+            intent.putExtra("url", "http://ec2-18-217-123-54.us-east-2.compute.amazonaws.com/faq");
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+            finish();
+
+        } else if (id == R.id.tc) {
+            Intent intent = new Intent(this, WebViewFragment.class);
+            intent.putExtra("url", "http://ec2-18-217-123-54.us-east-2.compute.amazonaws.com/tnc");
+            startActivity(intent);
+            overridePendingTransition(0, 0);
+            finish();
 
         } else if (id == R.id.logout) {
             sharedProcessData.setString("Token", "Null");
             sharedProcessData.setString("email", "");
-
+            sharedProcessData.setString("address", "");
             Intent intent = getIntent();
             finish();
             startActivity(intent);
@@ -284,10 +334,6 @@ public class MainActivity extends AppCompatActivity
                 break;
 
             case R.id.layout3:
-              /*  fragmentTransaction = getSupportFragmentManager().beginTransaction();
-                fragmentTransaction.replace(R.id.frame_layout, new HomeFragment());
-                fragmentTransaction.commit();
-                overridePendingTransition(0, 0);*/
                 break;
 
             case R.id.layout4:

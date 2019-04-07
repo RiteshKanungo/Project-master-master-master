@@ -10,5 +10,7 @@
     <string name="nav_header_subtitle">android.studio@android.com</string>
     <string name="nav_header_desc">Navigation header</string>
     <string name="datetime">Address and Date &amp; Time</string>
+    <string name="tc">Terms &amp; Condition</string>
+
     <string name="slot_text">Choose Delivery slot for this address</string>
 </resources>

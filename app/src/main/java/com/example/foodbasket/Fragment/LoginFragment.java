@@ -1,5 +1,6 @@
 package com.example.foodbasket.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -40,6 +41,7 @@ import java.util.Map;
 public class LoginFragment extends Fragment implements View.OnClickListener {
     View view;
     Button btn_login;
+    ProgressDialog progressDialog;
     String str_email = null, str_password = null;
     EditText edt_email, edt_password;
     TextView txt_forgot_pass;
@@ -55,6 +57,11 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
     }
 
     private void bindView() {
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setIndeterminate(false);
+        progressDialog.setMessage("Please wait..");
+        progressDialog.setCancelable(false);
+
         btn_login = view.findViewById(R.id.btn_login);
         btn_login.setOnClickListener(this);
 
@@ -95,7 +102,6 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                     Toast.makeText(getActivity(), "Connect to Network", Toast.LENGTH_SHORT).show();
                 }
 
-
                 break;
 
             case R.id.txt_forgot_pass:
@@ -125,15 +131,19 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
                             } else {
                                 Toast.makeText(getActivity(), "Invalid Credential", Toast.LENGTH_SHORT).show();
                                 edt_password.setText("");
+                                progressDialog.dismiss();
                             }
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        edt_password.setText("");
+                        progressDialog.dismiss();
                      /*   Log.d("Email", email);
                         Log.d("Password", password);
                         Log.d("Error.Response", error.toString());*/
@@ -157,6 +167,7 @@ public class LoginFragment extends Fragment implements View.OnClickListener {
             }
         };
         queue.add(postRequest);
+        progressDialog.show();
     }
 
     private boolean isNetworkConnected() {

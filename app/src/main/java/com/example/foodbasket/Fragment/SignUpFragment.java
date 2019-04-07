@@ -1,5 +1,6 @@
 package com.example.foodbasket.Fragment;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.net.ConnectivityManager;
@@ -47,6 +48,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     String emailPattern = "[a-zA-Z0-9._-]+@[a-z]+\\.+[a-z]+";
     SharedProcessData sharedProcessData;
     Spinner spinner;
+    ProgressDialog progressDialog;
     ArrayList<String> spinnerModelArrayList;
     ArrayAdapter<String> arrayAdapter;
 
@@ -84,6 +86,11 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
     }
 
     private void bindView() {
+        progressDialog = new ProgressDialog(getActivity());
+        progressDialog.setIndeterminate(false);
+        progressDialog.setMessage("Please wait..");
+        progressDialog.setCancelable(false);
+
         btn_signup = view.findViewById(R.id.btn_signup);
         btn_signup.setOnClickListener(this);
 
@@ -138,7 +145,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             } else if (str_passwpord.equalsIgnoreCase(str_confirm_password_)) {
                 String name = str_first_name + "" + str_last_name;
                 if (isNetworkConnected()) {
-                    Registration(name, str_email, str_passwpord, flat_id,str_building);
+                    Registration(name, str_email, str_passwpord, flat_id, str_building);
                 } else {
                     Toast.makeText(getActivity(), "Check your Network Connection", Toast.LENGTH_SHORT).show();
                 }
@@ -151,6 +158,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             Log.e("Exception", e + "");
         }
     }
+
     private void getSpinnerData() {
 
         StringRequest stringRequest = new StringRequest(Request.Method.GET, "http://ec2-18-217-123-54.us-east-2.compute.amazonaws.com/api/address/buildings", new Response.Listener<String>() {
@@ -170,6 +178,7 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
                 } catch (Exception e) {
                     Log.e("Error", e + "");
                 }
+                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
@@ -184,10 +193,11 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
             }
         };
         Volley.newRequestQueue(getActivity()).add(stringRequest);
+        progressDialog.show();
     }
 
 
-    public void Registration(final String name, final String email, final String password, final String flat_id,final String building) {
+    public void Registration(final String name, final String email, final String password, final String flat_id, final String building) {
         StringRequest stringRequest = new StringRequest(Request.Method.POST, "http://ec2-18-217-123-54.us-east-2.compute.amazonaws.com/api/user/register", new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -216,6 +226,9 @@ public class SignUpFragment extends Fragment implements View.OnClickListener {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                Toast.makeText(getActivity(), "Some Problem Occured", Toast.LENGTH_SHORT).show();
+                progressDialog.dismiss();
+
             }
         }) {
             protected Map<String, String> getParams() {

@@ -19,7 +19,6 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_centerVertical="true"
-            android:paddingLeft="20sp"
             android:text="sdfgsdfg"
             android:textAppearance="@style/TextAppearance.AppCompat.Body1"
             android:textColor="@color/colorWhite"
@@ -47,20 +46,22 @@
 
     <LinearLayout
         android:layout_width="match_parent"
+        android:id="@+id/linear_1"
         android:layout_height="wrap_content"
         android:layout_below="@+id/view_1"
-        android:orientation="horizontal">
+        android:orientation="horizontal"
+        android:padding="10dp">
 
         <TextView
             android:id="@+id/txt_address"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_width="315dp"
+            android:layout_height="33dp"
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="10sp"
             android:layout_weight="1"
             android:gravity="center_vertical"
-            android:padding="10sp"
             android:text="Address"
+            android:textColor="@color/colorBlack"
             android:textSize="16sp" />
 
         <ImageView
@@ -68,11 +69,17 @@
             android:layout_width="30sp"
             android:layout_height="30sp"
             android:layout_gravity="center_vertical"
-            android:layout_marginRight="30sp"
+            android:layout_marginRight="10sp"
             android:padding="5sp"
             android:src="@drawable/ic_edit_black_24dp" />
 
     </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2sp"
+        android:layout_below="@+id/linear_1"
+        android:background="@color/colorCircle" />
 
 
 </RelativeLayout>

@@ -1,5 +1,6 @@
 package com.example.foodbasket.SubCategory;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -11,6 +12,7 @@ import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -40,6 +42,7 @@ public class SubCategory extends AppCompatActivity implements View.OnClickListen
     TextView txt_no_item;
     String id, status;
     SharedProcessData sharedProcessData;
+    ProgressDialog progressDialog;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -62,6 +65,12 @@ public class SubCategory extends AppCompatActivity implements View.OnClickListen
     }
 
     private void bindView() {
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setMessage("Please wait..");
+        progressDialog.setCancelable(false);
+
         img_back = findViewById(R.id.img_back);
         img_back.setOnClickListener(this);
         grid_category = findViewById(R.id.grid_category);
@@ -113,11 +122,16 @@ public class SubCategory extends AppCompatActivity implements View.OnClickListen
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                            Toast.makeText(SubCategory.this, "Some Problem Occured", Toast.LENGTH_SHORT).show();
+                        }
                         Log.d("Error.Response", error.toString());
                     }
                 }
@@ -130,6 +144,7 @@ public class SubCategory extends AppCompatActivity implements View.OnClickListen
             }
         };
         queue.add(postRequest);
+        progressDialog.show();
 
     }
 
@@ -137,9 +152,16 @@ public class SubCategory extends AppCompatActivity implements View.OnClickListen
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_back:
-                startActivity(new Intent(this, MainActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                    startActivity(new Intent(this, MainActivity.class));
+                    overridePendingTransition(0, 0);
+                    finish();
+                } else {
+                    startActivity(new Intent(this, MainActivity.class));
+                    overridePendingTransition(0, 0);
+                    finish();
+                }
         }
     }
 
@@ -159,8 +181,17 @@ public class SubCategory extends AppCompatActivity implements View.OnClickListen
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, MainActivity.class));
-        overridePendingTransition(0, 0);
-        finish();
+
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+            startActivity(new Intent(this, MainActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
+        } else {
+            startActivity(new Intent(this, MainActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
+        }
+
     }
 }

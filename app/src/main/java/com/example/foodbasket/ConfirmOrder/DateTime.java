@@ -69,6 +69,7 @@ public class DateTime extends AppCompatActivity implements View.OnClickListener 
         getSharedData();
         sharedProcessData = new SharedProcessData(this);
         token = sharedProcessData.getString("Token");
+        str_address = sharedProcessData.getString("address");
 
         Date d = new Date();
         dayOfWeek = (String) DateFormat.format("dd-mm-yyyy ", d.getTime());
@@ -142,7 +143,10 @@ public class DateTime extends AppCompatActivity implements View.OnClickListener 
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        if (progressDialog.isShowing()){
+                            progressDialog.dismiss();
+                            Toast.makeText(DateTime.this, "Some Problem Occured", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
         ) {
@@ -199,7 +203,10 @@ public class DateTime extends AppCompatActivity implements View.OnClickListener 
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-
+                        if (progressDialog.isShowing()){
+                            progressDialog.dismiss();
+                            Toast.makeText(DateTime.this, "Some Problem Occured", Toast.LENGTH_SHORT).show();
+                        }
                     }
                 }
         ) {
@@ -232,6 +239,9 @@ public class DateTime extends AppCompatActivity implements View.OnClickListener 
         txt_name.setText(str_name);
 
         txt_address = findViewById(R.id.txt_address);
+        txt_address.setText(str_address);
+
+        txt_address = findViewById(R.id.txt_address);
         layout_confirm = findViewById(R.id.layout_confirm);
         layout_confirm.setOnClickListener(this);
         // txt_address.setText(str_address);
@@ -240,9 +250,16 @@ public class DateTime extends AppCompatActivity implements View.OnClickListener 
 
     @Override
     public void onBackPressed() {
-        startActivity(new Intent(this, CheckoutActivity.class));
-        overridePendingTransition(0, 0);
-        finish();
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+            startActivity(new Intent(this, CheckoutActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
+        } else {
+            startActivity(new Intent(this, CheckoutActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
+        }
     }
 
     @Override
@@ -285,11 +302,16 @@ public class DateTime extends AppCompatActivity implements View.OnClickListener 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
+                        progressDialog.show();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        if(progressDialog.isShowing()){
+                            progressDialog.dismiss();
+                            Toast.makeText(DateTime.this, "Some Problem Occured", Toast.LENGTH_SHORT).show();
+                        }
 
                     }
                 }
@@ -310,6 +332,6 @@ public class DateTime extends AppCompatActivity implements View.OnClickListener 
             }
         };
         queue.add(postRequest);
-
+        progressDialog.show();
     }
 }

@@ -5,23 +5,33 @@
 
     <group android:checkableBehavior="single">
         <item
-            android:id="@+id/nav_camera"
-            android:icon="@drawable/ic_menu_camera"
-            android:title="Import" />
+            android:id="@+id/cart"
+            android:enabled="false"
+            android:title="Cart" />
         <item
-            android:id="@+id/nav_gallery"
-            android:icon="@drawable/ic_menu_gallery"
-            android:title="Gallery" />
+            android:id="@+id/my_orders"
+            android:title="My Order" />
         <item
-            android:id="@+id/nav_slideshow"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Slideshow" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+            android:id="@+id/offers"
+            android:title="Offers" />
 
     </group>
 
+    <item android:title="Recommended">
+        <menu>
+            <item
+                android:id="@+id/about_us"
+                android:title="About Us" />
+            <item
+                android:id="@+id/customer_support"
+                android:title="Customer support" />
+            <item
+                android:id="@+id/faq"
+                android:title="FAQ" />
+            <item
+                android:id="@+id/tc"
+                android:title="@string/tc" />
+        </menu>
+    </item>
 
 </menu>

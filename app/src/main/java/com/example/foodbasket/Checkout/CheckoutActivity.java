@@ -1,5 +1,6 @@
 package com.example.foodbasket.Checkout;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -46,13 +47,14 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
 
     RecyclerView recycle_view;
     checkout_Adapter checkoutAdapter;
-    RelativeLayout layout_checkout, layout_no_item, layout_shopping;
+    RelativeLayout layout_checkout, layout_no_item, layout_shopping, relative_new;
     ArrayList<CheckoutModel> checkoutModelArrayList;
     ScrollView scroll_view;
     TextView txt_mrp, txt_discounted, txt_delivery, txt_total;
     SharedProcessData sharedProcessData;
     String token = null, status = null;
     String id = null, quantity = null;
+    ProgressDialog progressDialog;
     ImageView img_back;
 
     String total_amount = null, total_discount = null, cart_total = null, dilevery_charg = null, grand_total = null;
@@ -78,6 +80,11 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
 
     private void bindView() {
 
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setMessage("Please wait..");
+        progressDialog.setCancelable(false);
+
         recycle_view = findViewById(R.id.recycle_view);
         recycle_view.setNestedScrollingEnabled(false);
         txt_mrp = findViewById(R.id.txt_mrp);
@@ -95,6 +102,9 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
 
         scroll_view = findViewById(R.id.scroll_view);
         scroll_view.setVisibility(View.GONE);
+
+        relative_new = findViewById(R.id.relative_new);
+        relative_new.setVisibility(View.GONE);
 
         img_back = findViewById(R.id.img_back);
         img_back.setOnClickListener(this);
@@ -123,8 +133,6 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
                 Log.e("Data", id + " : Qua :" + quantity);
                 insertData(id, quantity);
                 getRecycleData();
-                startActivity(new Intent(CheckoutActivity.this, CheckoutActivity.class));
-                finish();
             }
         }
     };
@@ -139,12 +147,11 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
             @Override
             public void onResponse(String response) {
                 Log.e("Cart Response", response);
-
+                progressDialog.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
             }
         }) {
             protected Map<String, String> getParams() {
@@ -163,6 +170,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
             }
         };
         queue.add(request);
+        progressDialog.show();
     }
 
 
@@ -205,6 +213,7 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
                                     layout_no_item.setVisibility(View.GONE);
                                     scroll_view.setVisibility(View.VISIBLE);
                                     layout_checkout.setVisibility(View.VISIBLE);
+                                    relative_new.setVisibility(View.VISIBLE);
                                 }
                             }
 
@@ -218,11 +227,16 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                            Toast.makeText(CheckoutActivity.this, "Some Problem Occured", Toast.LENGTH_SHORT).show();
+                        }
                         Log.d("Error.Response", error.toString());
                     }
                 }
@@ -236,14 +250,22 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
             }
         };
         queue.add(postRequest);
+        progressDialog.show();
     }
 
     @Override
     public void onBackPressed() {
-        super.onBackPressed();
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        } else {
+            overridePendingTransition(0, 0);
+            startActivity(new Intent(this, MainActivity.class));
+            finish();
+        }
         // startActivity(new Intent(this, MainActivity.class));
-        overridePendingTransition(0, 0);
-        finish();
+
     }
 
     @Override
@@ -264,10 +286,15 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
                 break;
 
             case R.id.img_back:
-                super.onBackPressed();
-                startActivity(new Intent(this, MainActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                    startActivity(new Intent(this, MainActivity.class));
+                    finish();
+                } else {
+                    overridePendingTransition(0, 0);
+                    startActivity(new Intent(this, MainActivity.class));
+                    finish();
+                }
         }
     }
 }

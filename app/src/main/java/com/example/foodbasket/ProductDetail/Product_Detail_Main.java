@@ -1,5 +1,6 @@
 package com.example.foodbasket.ProductDetail;
 
+import android.app.ProgressDialog;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
@@ -25,7 +26,6 @@ import com.android.volley.toolbox.Volley;
 import com.example.foodbasket.Checkout.CheckoutActivity;
 import com.example.foodbasket.Home.RecyclerItemClickListener;
 import com.example.foodbasket.Main.LoginSignupActivity;
-import com.example.foodbasket.Main.MainActivity;
 import com.example.foodbasket.R;
 import com.example.foodbasket.SubCategory.SubCategory;
 import com.example.foodbasket.Utils.SharedProcessData;
@@ -49,7 +49,8 @@ public class Product_Detail_Main extends AppCompatActivity implements View.OnCli
     RelativeLayout layout_view_cart;
     String id = null, quantity = null;
     SharedProcessData sharedProcessData;
-    String grid_id=null;
+    String grid_id = null;
+    ProgressDialog progressDialog;
     String token = null, status = null, backstatus;
 
     @Override
@@ -61,7 +62,7 @@ public class Product_Detail_Main extends AppCompatActivity implements View.OnCli
         sharedProcessData = new SharedProcessData(this);
         token = sharedProcessData.getString("Token");
         backstatus = sharedProcessData.getString("BackStatus");
-        grid_id=getIntent().getStringExtra("sub_cat_Id");
+        grid_id = getIntent().getStringExtra("sub_cat_Id");
         Log.e("Token", token);
         bindView();
         LocalBroadcastManager.getInstance(this).registerReceiver(mMessageReceiver, new IntentFilter("custom-message2"));
@@ -97,7 +98,10 @@ public class Product_Detail_Main extends AppCompatActivity implements View.OnCli
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                    Toast.makeText(Product_Detail_Main.this, "Some Problem Occured", Toast.LENGTH_SHORT).show();
+                }
             }
         }) {
             protected Map<String, String> getParams() {
@@ -119,6 +123,12 @@ public class Product_Detail_Main extends AppCompatActivity implements View.OnCli
     }
 
     private void bindView() {
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setMessage("Please wait..");
+        progressDialog.setCancelable(false);
+
         img_back = findViewById(R.id.img_back);
         img_back.setOnClickListener(this);
 
@@ -135,12 +145,12 @@ public class Product_Detail_Main extends AppCompatActivity implements View.OnCli
 
     private void getGridData() {
         RequestQueue queue = Volley.newRequestQueue(this);
-        String url = "http://ec2-18-217-123-54.us-east-2.compute.amazonaws.com/api/products/category/"+grid_id;
+        String url = "http://ec2-18-217-123-54.us-east-2.compute.amazonaws.com/api/products/category/" + grid_id;
         StringRequest postRequest = new StringRequest(Request.Method.GET, url,
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Log.e("Product_Response",response);
+                        Log.e("Product_Response", response);
                         try {
                             JSONObject jsonObject = new JSONObject(response);
                             JSONArray jsonArray = jsonObject.getJSONArray("data");
@@ -170,12 +180,17 @@ public class Product_Detail_Main extends AppCompatActivity implements View.OnCli
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+                        progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        Log.d("Error.Response", error.toString());
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                            Toast.makeText(Product_Detail_Main.this, "Some Problem Occured", Toast.LENGTH_SHORT).show();
+                            Log.d("Error.Response", error.toString());
+                        }
                     }
                 }
         ) {
@@ -187,6 +202,7 @@ public class Product_Detail_Main extends AppCompatActivity implements View.OnCli
             }
         };
         queue.add(postRequest);
+        progressDialog.show();
 
     }
 
@@ -207,9 +223,18 @@ public class Product_Detail_Main extends AppCompatActivity implements View.OnCli
     public void onClick(View view) {
         switch (view.getId()) {
             case R.id.img_back:
-                startActivity(new Intent(this, SubCategory.class));
-                overridePendingTransition(0, 0);
-                finish();
+
+                if (progressDialog.isShowing()) {
+                    progressDialog.dismiss();
+                    startActivity(new Intent(this, SubCategory.class));
+                    overridePendingTransition(0, 0);
+                    finish();
+                } else {
+                    startActivity(new Intent(this, SubCategory.class));
+                    overridePendingTransition(0, 0);
+                    finish();
+                }
+
                 break;
 
             case R.id.layout_view_cart:
@@ -224,8 +249,16 @@ public class Product_Detail_Main extends AppCompatActivity implements View.OnCli
     @Override
     public void onBackPressed() {
 
+        if (progressDialog.isShowing()) {
+            progressDialog.dismiss();
+            startActivity(new Intent(this, SubCategory.class));
+            overridePendingTransition(0, 0);
+            finish();
+        } else {
             startActivity(new Intent(this, SubCategory.class));
             overridePendingTransition(0, 0);
             finish();
         }
+
+    }
 }

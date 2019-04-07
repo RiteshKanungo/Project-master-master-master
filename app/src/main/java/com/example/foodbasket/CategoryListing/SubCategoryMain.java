@@ -1,5 +1,6 @@
 package com.example.foodbasket.CategoryListing;
 
+import android.app.ProgressDialog;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
@@ -31,12 +32,14 @@ public class SubCategoryMain extends AppCompatActivity implements View.OnClickLi
     Adaptermain subCategoryAdapterMain;
     ImageView img_back;
     String id;
+    ProgressDialog progressDialog;
+
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.main_category);
-      //  id = getIntent().getStringExtra("Id");
+        //  id = getIntent().getStringExtra("Id");
         bindView();
     }
 
@@ -49,13 +52,19 @@ public class SubCategoryMain extends AppCompatActivity implements View.OnClickLi
     }
 
     private void bindView() {
- //      img_back = findViewById(R.id.img_back);
- //      img_back.setOnClickListener(this);
+
+        progressDialog = new ProgressDialog(this);
+        progressDialog.setIndeterminate(false);
+        progressDialog.setMessage("Please wait..");
+        progressDialog.setCancelable(false);
+
+        //      img_back = findViewById(R.id.img_back);
+        //      img_back.setOnClickListener(this);
         recycle_view = findViewById(R.id.recycle_view);
         subCategoryModelMains = new ArrayList<>();
         RecyclerView.LayoutManager mLayoutManager2 = new LinearLayoutManager(getApplicationContext(), LinearLayoutManager.VERTICAL, false);
         recycle_view.setLayoutManager(mLayoutManager2);
-        subCategoryAdapterMain = new Adaptermain( subCategoryModelMains,this);
+        subCategoryAdapterMain = new Adaptermain(subCategoryModelMains, this);
         getGridData();
     }
 
@@ -76,12 +85,12 @@ public class SubCategoryMain extends AppCompatActivity implements View.OnClickLi
                                 String discount = object.getString("discount");
                                 String discount_by = object.getString("discount_by");
                                 String description = object.getString("description");
-                                Log.e("description",description);
+                                Log.e("description", description);
 
                                 if (discount_by.equalsIgnoreCase("ammount_off")) {
-                                 //   subCategoryModelMains.add(new SubCategoryModelMain(image, "Rs " + discount + " off", name, description));
+                                    //   subCategoryModelMains.add(new SubCategoryModelMain(image, "Rs " + discount + " off", name, description));
                                 } else {
-                                 //   subCategoryModelMains.add(new SubCategoryModelMain(image, discount + "% off", name, description));
+                                    //   subCategoryModelMains.add(new SubCategoryModelMain(image, discount + "% off", name, description));
                                 }
                                 recycle_view.setAdapter(subCategoryAdapterMain);
                                 subCategoryAdapterMain.notifyDataSetChanged();
@@ -90,11 +99,16 @@ public class SubCategoryMain extends AppCompatActivity implements View.OnClickLi
                         } catch (Exception e) {
                             e.printStackTrace();
                         }
+
+                        progressDialog.dismiss();
                     }
                 },
                 new Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
+                        if (progressDialog.isShowing()) {
+                            progressDialog.dismiss();
+                        }
                         Log.d("Error.Response", error.toString());
                     }
                 }
@@ -107,6 +121,7 @@ public class SubCategoryMain extends AppCompatActivity implements View.OnClickLi
             }
         };
         queue.add(postRequest);
+        progressDialog.show();
 
     }
 
@@ -114,7 +129,7 @@ public class SubCategoryMain extends AppCompatActivity implements View.OnClickLi
     public void onClick(View view) {
         switch (view.getId()) {
             //case R.id.img_back:
-             //   finish();
+            //   finish();
         }
     }
 }

@@ -62,6 +62,10 @@
             android:name=".ConfirmOrder.DateTime"
             android:windowSoftInputMode="stateHidden" />
 
+        <activity
+            android:name=".WebViewFragment"
+            android:windowSoftInputMode="stateHidden" />
+
     </application>
 
 </manifest>
