@@ -29,6 +29,7 @@ import com.android.volley.toolbox.Volley;
 import com.example.foodbasket.Checkout.CheckoutActivity;
 import com.example.foodbasket.Fragment.CategoriesFragment;
 import com.example.foodbasket.Fragment.HomeFragment;
+import com.example.foodbasket.OrderListing.ListingActivity;
 import com.example.foodbasket.R;
 import com.example.foodbasket.Utils.SharedProcessData;
 import com.example.foodbasket.WebViewFragment;
@@ -252,7 +253,9 @@ public class MainActivity extends AppCompatActivity
             finish();
 
         } else if (id == R.id.my_orders) {
-
+            startActivity(new Intent(this, ListingActivity.class));
+            overridePendingTransition(0, 0);
+            finish();
         } else if (id == R.id.offers) {
             Intent intent = new Intent(this, WebViewFragment.class);
             intent.putExtra("url", "http://ec2-18-217-123-54.us-east-2.compute.amazonaws.com/offers");

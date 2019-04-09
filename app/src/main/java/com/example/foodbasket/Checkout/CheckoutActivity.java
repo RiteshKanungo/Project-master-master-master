@@ -131,11 +131,51 @@ public class CheckoutActivity extends AppCompatActivity implements View.OnClickL
                 startActivity(new Intent(CheckoutActivity.this, LoginSignupActivity.class));
             } else {
                 Log.e("Data", id + " : Qua :" + quantity);
-                insertData(id, quantity);
-                getRecycleData();
+                if(!quantity.equals("0")){
+                    insertData(id, quantity);
+                    getRecycleData();
+                }else {
+                    insertDataempty(id);
+                    getRecycleData();
+                }
             }
         }
     };
+
+    private void insertDataempty(final String id) {
+        Log.e("Insert", id);
+        RequestQueue queue = Volley.newRequestQueue(this);
+        String url = "http://ec2-18-217-123-54.us-east-2.compute.amazonaws.com/api/cart";
+        StringRequest request = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.e("Cart Response", response);
+
+                progressDialog.dismiss();
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+            }
+        }) {
+            protected Map<String, String> getParams() {
+                Map<String, String> params = new HashMap<>();
+                params.put("product_id", id);
+                params.put("quantity", "0");
+                return params;
+            }
+
+            @Override
+            public Map<String, String> getHeaders() {
+                Map<String, String> params = new HashMap<>();
+                params.put("Accept", "application/json");
+                params.put("Authorization", "Bearer " + token);
+                return params;
+            }
+        };
+        queue.add(request);
+        progressDialog.show();
+    }
 
 
     private void insertData(final String product_id, final String qua) {

@@ -66,6 +66,10 @@
             android:name=".WebViewFragment"
             android:windowSoftInputMode="stateHidden" />
 
+        <activity
+            android:name=".OrderListing.ListingActivity"
+            android:windowSoftInputMode="stateHidden" />
+
     </application>
 
 </manifest>

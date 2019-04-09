@@ -108,6 +108,7 @@ public class checkout_Adapter extends RecyclerView.Adapter<checkout_Adapter.View
                         @Override
                         public void onClick(View view) {
                             dialog.cancel();
+                            minteger = 1;
                             int pos = getAdapterPosition();
                             int idvalue = list.get(pos).getId();
                             String value = String.valueOf(idvalue);
@@ -121,8 +122,8 @@ public class checkout_Adapter extends RecyclerView.Adapter<checkout_Adapter.View
                     btn_add.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
-                            minteger = Integer.parseInt(txt_qua.getText().toString());
-                            minteger = minteger + 1;
+                            Integer val= Integer.valueOf(txt_qua.getText().toString());
+                            minteger = val + 1;
                             txt_qua.setText(minteger + "");
                         }
                     });
@@ -130,12 +131,12 @@ public class checkout_Adapter extends RecyclerView.Adapter<checkout_Adapter.View
                     btn_delete.setOnClickListener(new View.OnClickListener() {
                         @Override
                         public void onClick(View v) {
+                            Integer val= Integer.valueOf(txt_qua.getText().toString());
 
-                            if (minteger < 1) {
+                            if (val < 1) {
                                 dialog.cancel();
                             } else {
-                                minteger = Integer.parseInt(txt_qua.getText().toString());
-                                minteger = minteger - 1;
+                                minteger = val - 1;
                                 txt_qua.setText(minteger + "");
                             }
                         }
